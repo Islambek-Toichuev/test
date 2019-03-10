@@ -1,0 +1,21 @@
+a {
+  text-decoration: none;
+}
+body div input:-internal-autofill-selected {
+  background-color: transparent !important;
+}
+.loader {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.front-table {
+  max-width: 80%;
+  margin: 0 auto;
+}
