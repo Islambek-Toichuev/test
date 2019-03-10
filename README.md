@@ -1,5 +1,5 @@
 ## Installation
 
-  Clone/download repo
-  npm install
+  Clone/download repo<br>
+  npm install<br>
   npm start
