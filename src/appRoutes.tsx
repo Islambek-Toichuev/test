@@ -15,7 +15,7 @@ class AppRoutes extends Component {
         <Route path="/" exact component={Login} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        {session.length > 0 && <Route path="/currencies" component={FrontPage} />}
+        <Route path="/currencies" component={FrontPage} />
       </div>
     );
   }
