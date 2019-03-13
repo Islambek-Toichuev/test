@@ -18,21 +18,26 @@ let Settings = styled.div`
 
 export default class AdminPage extends Component {
 
+    state = {
+        users: [],
+    };
 
-    async componentDidMount() {
-        console.log('', adminService.getAllUsers());
-    }
+    async componentWillMount() {
+        this.setState({
+            users: adminService.getAllUsers()
+        })
+    };
 
 
     render() {
-
-        return  2+2==4 ? (
+        let { users } = this.state;
+        console.log(users)
+        return (
             <Settings>
                 <h1 className="page-title">Admin Settings</h1>
-                <div className="trade-screen">
-
-                </div>
+                <div className="admin-page"></div>
             </Settings>
-        ) : <Loader/>;
+        )
+        // : <Loader/>;
     }
 }

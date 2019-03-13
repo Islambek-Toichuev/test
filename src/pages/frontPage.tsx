@@ -23,7 +23,7 @@ export default class FrontPage extends Component<Props> {
     logout: false
   };
 
-  componentDidMount = async () => {
+  async componentWillMount() {
 
     let currencies = await currencyService.getCurrencyCodes;
 
@@ -50,6 +50,7 @@ export default class FrontPage extends Component<Props> {
 
   render() {
     const { tableData } = this.state;
+    console.log(tableData)
     return tableData ? (
       <div className="front-table">
         {tableData && <h1>Cryptocurrency Table</h1>}
