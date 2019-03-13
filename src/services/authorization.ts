@@ -17,13 +17,13 @@ export default class AuthorizationService {
   };
 
   logIn = (user: any) => {
-    if (_.isEmpty(registeredUsers)) return Error('No Users in db');
+    if (_.isEmpty(registeredUsers)) return {text: Error('No Users in db'), res: false};
     let userIsRegistered = registeredUsers.find((usr: any) => usr.email === user.email && usr.password === user.password);
     if (!!userIsRegistered) {
       store.setItem('currentUser', JSON.stringify(userIsRegistered));
-      return true;
+      return {text: 'Success', res: true};
     }
-    return new Error('Incorrect Username or Password');
+    return {text: 'Incorrect Username or Password', res: false};
   };
 
   logOut = () => store.setItem('currentUser', '');

@@ -21,8 +21,8 @@ export default class Login extends Component {
   };
 
   logIn = () => {
-    let clbk = authService.logIn(this.state);
-    if (typeof clbk === "object") return this.setState({ error: true })
+    let authorize = authService.logIn(this.state);
+    if (!authorize.res) return this.setState({ error: true })
     return this.setState({ loggedIn: true })
   };
 
