@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { TableBuilder } from "../helpers/tableBuilder";
 import { CurrencyService } from "../services/currencies";
 import { TradesService } from "../services/trades";
-import { Redirect } from 'react-router';
+import { Redirect,  } from "react-router";
+import { Link } from "react-router-dom";
 import Table from "../components/table/index";
 import Loader from "../components/loader/index";
 import AuthorizationService from "../services/authorization";
@@ -12,11 +13,15 @@ const authService = new AuthorizationService();
 const currencyService = new CurrencyService();
 const tradesService = new TradesService();
 
-export default class FrontPage extends Component {
+interface Props {
+    history: any
+}
+
+export default class FrontPage extends Component<Props> {
   state = {
     tableData: null,
     logout: false
-  }
+  };
 
   componentDidMount = async () => {
 
@@ -30,12 +35,18 @@ export default class FrontPage extends Component {
     let tableData = new TableBuilder().currencyTable(currencies, recentTrades, currencyImages);
 
     this.setState({ tableData: tableData })
-  }
+  };
+
+  showTradeScreen = (row: any) => {
+      let PrimaryCurrency = row[1].value.replace(/ /g, '').split('/')[0];
+      this.props.history.push(`/currencies/${PrimaryCurrency}`);
+      console.log('', row);
+  };
 
   logOut = () => {
     authService.logOut();
     this.setState({ logout: true })
-  }
+  };
 
   render() {
     const { tableData } = this.state;
@@ -43,7 +54,8 @@ export default class FrontPage extends Component {
       <div className="front-table">
         {tableData && <h1>Cryptocurrency Table</h1>}
         <Button color="secondary" onClick={() => this.logOut()}>Logout</Button>
-        {tableData && <Table tableData={tableData} />}
+          <Link to="/admin"><Button color="secondary">Admin</Button></Link>
+        {tableData && <Table rowClick={(e: any) => this.showTradeScreen(e)} tableData={tableData} />}
         {this.state.logout && <Redirect to="/" />}
       </div>
     ) : (<Loader />);

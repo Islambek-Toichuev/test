@@ -75,5 +75,24 @@ export class TableBuilder {
         },
       ]
     })
-  }
+  };
+
+  tradeScreenTable = (trades: any) => {
+      return trades.map((trade: any) => {
+          return [
+              {
+                  title: 'Trade Time',
+                  value: new Date(trade['TradeTimestampUtc']).toLocaleDateString(),
+              },
+              {
+                  title: 'Primary Currency Amount',
+                  value: trade['PrimaryCurrencyAmount'].toFixed(2),
+              },
+              {
+                  title: 'Secondary Currency Trade Price',
+                  value: trade['SecondaryCurrencyTradePrice'].toFixed(2),
+              },
+          ]
+      })
+  };
 }

@@ -12,9 +12,9 @@ export default class AuthorizationService {
     let userIsRegistered = _.isEmpty(registeredUsers) ? false : registeredUsers.find((usr: any) => usr.email === user.email && usr.password === user.password);
     if (!!userIsRegistered) return new Error('This email already exist');
     if (!_.isEmpty(registeredUsers)) return store.setItem('users', JSON.stringify([...registeredUsers, user]));
-    store.setItem('currentUser', user.email)
+    store.setItem('currentUser', user.email);
     return store.setItem('users', JSON.stringify([user]));
-  }
+  };
 
   logIn = (user: any) => {
     if (_.isEmpty(registeredUsers)) return Error('No Users in db');
@@ -24,7 +24,7 @@ export default class AuthorizationService {
       return true;
     }
     return new Error('Incorrect Username or Password');
-  }
+  };
 
   logOut = () => store.setItem('currentUser', '');
 

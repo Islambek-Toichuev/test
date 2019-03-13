@@ -1,6 +1,8 @@
 
 export class BaseService {
+
   constructor() { }
+
   getJson = async (url: string) => {
     try {
       let response = await fetch(url, {
@@ -13,7 +15,8 @@ export class BaseService {
     } catch (err) {
       console.error('err:', err)
     }
-  }
+  };
+
   getRequest = async (url: string) => {
     try {
       let response = await fetch(url, {method: "GET"});

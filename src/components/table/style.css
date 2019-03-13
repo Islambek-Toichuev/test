@@ -18,9 +18,18 @@
 .cell:first-of-type {
   padding-left: 24px;
 }
-.row:nth-child(2n+3) > div,
+.row:nth-child(2n+3),
 .row:first-of-type {
   background: #f9f9f9;
+}
+.row {
+  transition: all 300ms;
+}
+.row.hover {
+  cursor: pointer;
+}
+.row.hover:hover {
+  background: #4caf506e !important;
 }
 span.red {
   color: red;

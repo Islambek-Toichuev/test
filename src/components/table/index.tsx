@@ -19,12 +19,13 @@ let Rows = styled.div`
 `;
 
 export interface TableProps {
-  tableData: any
+    tableData: any,
+    rowClick?: any
 }
 
 export default class Table extends React.Component<TableProps> {
   render() {
-    let { tableData } = this.props;
+    let { tableData, rowClick } = this.props;
     return (
       <div className="table_wrapper">
         <Headers length={tableData && tableData[0].length}>
@@ -37,7 +38,7 @@ export default class Table extends React.Component<TableProps> {
         <Rows length={tableData && tableData[0].length}>
           {tableData && 
             tableData.map((row:any, index: number) => 
-              <div className="row" key={index}>
+              <div onClick={() => rowClick(row)} className={`row ${rowClick && 'hover'}`} key={index}>
                 {row.map((item: any, i: number) => <div className="cell tr" key={i}>{item.value}</div>) }
               </div>)
           }
