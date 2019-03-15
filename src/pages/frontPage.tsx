@@ -13,6 +13,7 @@ interface Props {
 }
 
 export default class FrontPage extends Component<Props> {
+
   state = {
     tableData: null,
   };
@@ -21,8 +22,8 @@ export default class FrontPage extends Component<Props> {
 
     let currencies = await currencyService.getCurrencyCodes;
 
-    let requestImages: any[] = currencies.map((currency: string) => currencyService.getCurrencyImage(currency));
-    let requestRecentTrades: any[] = currencies.map((currency: string) => tradesService.getRecentTrades(currency));
+    let requestImages: any[] = currencies.map(async (currency: string) => await currencyService.getCurrencyImage(currency));
+    let requestRecentTrades: any[] = currencies.map(async (currency: string) => await tradesService.getRecentTrades(currency));
 
     let currencyImages: any[] = await Promise.all(requestImages);
     let recentTrades: any[] = await Promise.all(requestRecentTrades);
