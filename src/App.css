@@ -22,3 +22,7 @@ body div input:-internal-autofill-selected {
   max-width: 80%;
   margin: 0 auto;
 }
+span.error {
+  font-size: 11px;
+  color: #f00;
+}
