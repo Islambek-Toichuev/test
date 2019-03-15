@@ -8,11 +8,9 @@ import createHistory from "history/createBrowserHistory";
 import Menu from "./components/menu";
 
 const FrontPage = React.lazy(() => import('./pages/frontPage'));
-
+const history = createHistory();
 class AppRoutes extends Component {
     render() {
-        const history = createHistory();
-
         return (
                 <Router history={history}>
                     <div>
