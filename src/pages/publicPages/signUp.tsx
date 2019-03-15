@@ -4,9 +4,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
+import {Validators} from "../../helpers/validators";
 import './style.css';
 
 const authService = new AuthorizationService();
+const validate = new Validators();
 
 export default class SignUp extends Component {
 
@@ -14,19 +16,24 @@ export default class SignUp extends Component {
     username: '',
     email: '',
     password: '',
-    redirect: false
+    redirect: false,
   };
 
-  onChange = (val: string, field: string) => {
-    this.setState({ [field]: val, error: false })
-  };
+  onChange = (val: string, field: string) => this.setState({[field]: val});
 
   signUp = () => {
-    authService.registerNewUser(this.state);
+    let { password, email } = this.state;
+    authService.registerNewUser({password: password, email: email});
     this.setState({ redirect: true })
-  }
+  };
 
   render() {
+      let {
+          email,
+          password,
+          redirect
+      } = this.state;
+
     return (
       <div className="container-login">
         <div className="login_form">
@@ -45,6 +52,7 @@ export default class SignUp extends Component {
               className="login_field"
               onChange={(e) => this.onChange(e.target.value, 'email')}
             />
+              {!validate.email(email) && <span className="error">Please provide valid email</span>}
             <TextField
               required
               label="Password"
@@ -53,11 +61,13 @@ export default class SignUp extends Component {
               className="login_field"
               onChange={(e) => this.onChange(e.target.value, 'password')}
             />
+              {password.length <= 5 && <span className="error">Min password length is 6</span>}
             <div className="actions">
               <Button
                 onClick={() => this.signUp()}
                 variant="contained"
                 color="primary"
+                disabled={(!validate.email(email) || password.length <= 5)}
               >
                 Sign Up
               </Button>
@@ -69,7 +79,7 @@ export default class SignUp extends Component {
             </div>
           </form>
         </div>
-        {this.state.redirect && <Redirect to="/currencies" />}
+        {redirect && <Redirect to="/currencies" />}
       </div>
     )
   }
