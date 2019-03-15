@@ -38,7 +38,7 @@ export default class Table extends React.Component<TableProps> {
         <Rows length={tableData && tableData[0].length}>
           {tableData && 
             tableData.map((row:any, index: number) => 
-              <div onClick={() => rowClick(row)} className={`row ${rowClick && 'hover'}`} key={index}>
+              <div onClick={() => rowClick && rowClick(row)} className={`row ${rowClick && 'hover'}`} key={index}>
                 {row.map((item: any, i: number) => <div className="cell tr" key={i}>{item.value}</div>) }
               </div>)
           }
