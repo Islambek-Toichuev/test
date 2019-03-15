@@ -2,7 +2,6 @@ import _ from "lodash";
 const store = window.localStorage;
 let registeredUsers = JSON.parse(store.getItem('users') || '{}');
 let currentUser = store.getItem('currentUser') || '';
-
 // Notes: I know that this part is hacky and saving sensetive data in localstorage is not secure
 // for sure this code should use JSON Web Tokens and Passport.js
 export default class AuthorizationService {
@@ -21,12 +20,12 @@ export default class AuthorizationService {
     let userIsRegistered = registeredUsers.find((usr: any) => usr.email === user.email && usr.password === user.password);
     if (!!userIsRegistered) {
       store.setItem('currentUser', JSON.stringify(userIsRegistered));
-      return {text: 'Success', res: true};
+      return {text: 'Success', res: true, user: currentUser};
     }
     return {text: 'Incorrect Username or Password', res: false};
   };
 
   logOut = () => store.setItem('currentUser', '');
 
-  getCurrentUser = () => currentUser;
+  getCurrentSession = () => currentUser;
 }
