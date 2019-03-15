@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Loader from "../components/loader/index";
 import AdminService from "../services/admin";
 
 let adminService = new AdminService();
@@ -31,13 +30,12 @@ export default class AdminPage extends Component {
 
     render() {
         let { users } = this.state;
-        console.log(users)
+        console.log(users);
         return (
             <Settings>
                 <h1 className="page-title">Admin Settings</h1>
-                <div className="admin-page"></div>
+                <div className="admin-page">{}</div>
             </Settings>
         )
-        // : <Loader/>;
     }
 }
