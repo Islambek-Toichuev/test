@@ -40,6 +40,7 @@ export default class Login extends Component<Props> {
         let {email, password} = this.state;
 
         let authorize = authService.logIn({email: email, password: password});
+        debugger;
         if (!authorize.res) return this.setState({error: true});
         changeSession(`{email: ${email}, password: ${password},}`);
         return  this.props.history.push('/currencies');
@@ -81,7 +82,7 @@ export default class Login extends Component<Props> {
                                         onClick={() => this.logIn(changeSession)}
                                         variant="contained"
                                         color="primary"
-                                        disabled={(!validate.email(email) || password.length <= 5)}
+                                        disabled={error}
                                     >
                                         Login
                                     </Button>
