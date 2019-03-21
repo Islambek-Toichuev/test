@@ -40,7 +40,6 @@ export default class Login extends Component<Props> {
         let {email, password} = this.state;
 
         let authorize = authService.logIn({email: email, password: password});
-        debugger;
         if (!authorize.res) return this.setState({error: true});
         changeSession(`{email: ${email}, password: ${password},}`);
         return  this.props.history.push('/currencies');
