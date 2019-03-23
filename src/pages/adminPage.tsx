@@ -6,6 +6,8 @@ import Table from "../components/table/index";
 import PopUp from "../components/popUp";
 import Button from "@material-ui/core/Button";
 import { RouteComponentProps } from "react-router-dom";
+import { connect } from "react-redux";
+import { User } from "../interfaces/index";
 
 const adminService = new AdminService();
 
@@ -25,27 +27,25 @@ let Settings = styled.div`
 
 let tableBuilder = new TableBuilder();
 
-interface User {
-  username?: string;
-  email: string;
-  password: string;
-}
-
 interface State {
   selectedUser: any;
   users: any;
 }
 
-export default class AdminPage extends Component<
-  RouteComponentProps<any>,
-  State
-> {
+interface Props {
+  selectedUser: any;
+  users: any;
+  session?: any;
+}
+
+class AdminPage extends Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
       users: tableBuilder.adminUsers(
         adminService.getAllUsers(),
-        this.deleteHandler
+        this.deleteHandler,
+        this.props.session.email
       ),
       selectedUser: null
     };
@@ -60,7 +60,8 @@ export default class AdminPage extends Component<
     this.setState({
       users: tableBuilder.adminUsers(
         adminService.getAllUsers(),
-        this.deleteHandler
+        this.deleteHandler,
+        this.props.session.email
       ),
       selectedUser: null
     });
@@ -68,6 +69,7 @@ export default class AdminPage extends Component<
 
   render() {
     let { users, selectedUser } = this.state;
+    console.log()
     return (
       <Settings>
         <h1 className="page-title">Admin Settings</h1>
@@ -103,3 +105,9 @@ export default class AdminPage extends Component<
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return { session: state.session };
+};
+
+export default connect(mapStateToProps)(AdminPage);

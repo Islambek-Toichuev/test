@@ -110,7 +110,7 @@ export default class TableBuilder {
     });
   };
 
-  adminUsers = (users: User[], deleteHandler: any) => {
+  adminUsers = (users: User[], deleteHandler: any, currentUser: string) => {
     return users.map((user: User) => {
       return [
         {
@@ -133,7 +133,7 @@ export default class TableBuilder {
                 variant="contained"
                 color="secondary"
                 disabled={
-                  user.email === 'change'
+                  user.email === currentUser
                 }
                 onClick={() => deleteHandler(user)}
               >
