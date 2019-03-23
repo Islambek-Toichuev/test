@@ -1,37 +1,51 @@
 import _ from "lodash";
+import { User } from "../interfaces/index";
 
 // Notes: I know that this part is hacky and saving sensetive data in localstorage is not secure
 // for sure this code should use JSON Web Tokens and Passport.js
+
+const response = {
+  emailExist: { text: "This email already exist", res: false },
+  noUsersInDb: { text: "No Users in db", res: false },
+  emailOrPasswordError: { text: "Incorrect Username or Password", res: false },
+  success: { text: "Success", res: true }
+};
+
 export default class AuthorizationService {
   constructor() {}
 
   store = window.localStorage;
   registeredUsers = JSON.parse(this.store.getItem("users") || "{}");
-  noUsersInDB =  this.registeredUsers.length === 0;
+  noUsersInDB = this.registeredUsers.length === 0;
+  findUserbyEmail = (user: User) => {
+    return this.registeredUsers.find(
+      (item: User) =>
+        item.email === user.email && item.password === user.password
+    );
+  };
 
-  registerNewUser = (user: any) => {
+  registerNewUser = (user: User) => {
     let userIsRegistered = this.noUsersInDB
       ? false
-      : this.registeredUsers.find(
-          (usr: any) =>
-            usr.email === user.email && usr.password === user.password
-        );
-    if (!!userIsRegistered) return new Error("This email already exist");
-    if (!_.isEmpty(this.registeredUsers)) return this.store.setItem("users", JSON.stringify([...this.registeredUsers, user]));
-    return this.store.setItem("users", JSON.stringify([user]));
-  };
-
-  logIn = (user: any) => {
-    if (this.noUsersInDB) return { text: "No Users in db", res: false };
-    let userIsRegistered = this.registeredUsers.find(
-      (usr: any) => usr.email === user.email && usr.password === user.password
-    );
-    if (!!userIsRegistered) {
-      this.store.setItem("currentUser", JSON.stringify(userIsRegistered));
-      return { text: "Success", res: true, user: userIsRegistered};
+      : !!this.findUserbyEmail(user);
+    if (userIsRegistered) return response.emailExist;
+    if (!this.noUsersInDB) {
+      this.store.setItem(
+        "users",
+        JSON.stringify([...this.registeredUsers, user])
+      );
+      return response.success;
     }
-    return { text: "Incorrect Username or Password", res: false };
+    this.store.setItem("users", JSON.stringify([user]));
+    return response.success;
   };
 
-  getCurrentSession = () => {};
+  logIn = (user: User) => {
+    if (this.noUsersInDB) return response.noUsersInDb;
+    let userIsRegistered = this.registeredUsers.find(
+      (usr: User) => usr.email === user.email && usr.password === user.password
+    );
+    if (!!userIsRegistered) return response.success;
+    return response.emailOrPasswordError;
+  };
 }

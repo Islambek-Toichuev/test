@@ -69,7 +69,7 @@ class AdminPage extends Component<Props, State> {
 
   render() {
     let { users, selectedUser } = this.state;
-    console.log()
+
     return (
       <Settings>
         <h1 className="page-title">Admin Settings</h1>

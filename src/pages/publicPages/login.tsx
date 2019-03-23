@@ -58,7 +58,7 @@ class Login extends Component<Props, State> {
   handleSubmit = () => {
     let { email, password } = this.state;
     let user = { email: email, password: password };
-    let authorize = authService.logIn({ email: email, password: password });
+    let authorize = authService.logIn(user);
     if (!authorize.res)
       return this.setState({
         error: { message: authorize.text, isError: true }

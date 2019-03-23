@@ -5,29 +5,79 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import { Validators } from "../../helpers/validators";
+import { User } from "../../interfaces/index";
+import { set_session } from "../../redux/actions/index";
+import { connect } from "react-redux";
 import "./style.css";
 
-const authService = new AuthorizationService();
 const validate = new Validators();
+const authService = new AuthorizationService();
 
-export default class SignUp extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    redirect: false
+interface Props {
+  history: any;
+  dispatch: any;
+  session?: User;
+  setSession: (user: User) => void;
+}
+
+interface State {
+  session?: User;
+  username?: string;
+  email: string;
+  password: string;
+  redirect: boolean;
+  error: { message: string; isError: boolean };
+}
+
+class SignUp extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      username: "",
+      email: "",
+      password: "",
+      error: { message: "", isError: false },
+      redirect: false
+    };
+  }
+
+  onChange = (val: string, field: string) => {
+    if (field === "email") {
+      return validate.email(val)
+        ? this.setState({ email: val, error: { message: "", isError: false } })
+        : this.setState({
+            error: { message: "Please provide valid email", isError: true }
+          });
+    }
+    if (field === "password") {
+      this.setState({ password: val });
+      return val.length >= 6
+        ? this.setState({ error: { message: "", isError: false } })
+        : this.setState({
+            error: { message: "Min password length is 6", isError: true }
+          });
+    }
   };
 
-  onChange = (val: string, field: string) => this.setState({ [field]: val });
-
-  signUp = () => {
-    let { password, email } = this.state;
-    authService.registerNewUser({ password: password, email: email });
+  handleSubmit = () => {
+    let { email, password } = this.state;
+    let user = { email: email, password: password };
+    let register = authService.registerNewUser(user);
+    
+    if (!register.res)
+      return this.setState({
+        error: { message: register.text, isError: true }
+      });
+    this.props.setSession(user);
     this.setState({ redirect: true });
+    return this.props.history.push("/currencies");
   };
 
   render() {
-    let { email, password, redirect } = this.state;
+    let { email, password, redirect, error } = this.state;
+    let incorrectPassword = password.length <= 5 && error.isError;
+    let incorrectEmail = validate.email(email) && error.isError;
 
     return (
       <div className="container-login">
@@ -41,29 +91,27 @@ export default class SignUp extends Component {
               onChange={e => this.onChange(e.target.value, "username")}
             />
             <TextField
-              required
               label="Email"
               margin="normal"
               className="login_field"
+              error={incorrectEmail}
               onChange={e => this.onChange(e.target.value, "email")}
             />
-            {!validate.email(email) && (
-              <span className="error">Please provide valid email</span>
-            )}
+            {incorrectEmail && <span className="error">{error.message}</span>}
             <TextField
-              required
               label="Password"
               type="password"
               margin="normal"
               className="login_field"
+              error={incorrectPassword}
               onChange={e => this.onChange(e.target.value, "password")}
             />
-            {password.length <= 5 && (
-              <span className="error">Min password length is 6</span>
+            {incorrectPassword && (
+              <span className="error">{error.message}</span>
             )}
             <div className="actions">
               <Button
-                onClick={() => this.signUp()}
+                onClick={() => this.handleSubmit()}
                 variant="contained"
                 color="primary"
                 disabled={!validate.email(email) || password.length <= 5}
@@ -81,3 +129,16 @@ export default class SignUp extends Component {
     );
   }
 }
+
+const mapStateToProps = (state: State) => {
+  return { state };
+};
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setSession: (user: User) => dispatch(set_session(user))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);
