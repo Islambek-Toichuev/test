@@ -1,0 +1,39 @@
+.filter_currencies {
+  display: flex;
+  margin-bottom: 20px;
+}
+.filter_currencies > div {
+  display: flex;
+  margin-right: 5px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 2px 5px;
+  text-transform: uppercase;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+.filter_currencies > div:hover {
+  background-color: #eee;
+}
+.filter_currencies > div.active {
+  background-color: #07c;
+  color: #fff;
+  border-color: #07c;
+}
+.aud {
+  background: url('/img/flags/Aud24.png')
+}
+.usd {
+  background: url('/img/flags/Usd24.png')
+}
+.nzd {
+  background: url('/img/flags/Nzd24.png')
+}
+.flag_ic {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+}

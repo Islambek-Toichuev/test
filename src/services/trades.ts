@@ -6,6 +6,6 @@ const base = new BaseService();
 export default class TradesService {
   constructor() {}
 
-  getRecentTrades = (PrimaryCurrencyCode: string) =>
-    base.getJson(recentTrades(PrimaryCurrencyCode));
+  getRecentTrades = (PrimaryCurrencyCode: string, secondaryCurrencyCode = 'aud') =>
+    base.getJson(recentTrades(PrimaryCurrencyCode, secondaryCurrencyCode.toLowerCase()));
 }

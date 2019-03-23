@@ -8,6 +8,7 @@ h4,
 h5,
 h6 {
   font-weight: 500;
+  font-family: serif;
 }
 body div input:-internal-autofill-selected {
   background-color: transparent !important;

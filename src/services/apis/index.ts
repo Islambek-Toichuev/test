@@ -10,5 +10,5 @@ export const currencyImages = (primaryCurrencyCode: string) =>
   `${ignoreCORS}${inds}img/flags/${primaryCurrencyCode}32.png`;
 
 // currency trades api
-export const recentTrades = (primaryCurrencyCode: string) =>
-  `${ignoreCORS}${indsAPI}Public/GetRecentTrades?primaryCurrencyCode=${primaryCurrencyCode}&secondaryCurrencyCode=aud&numberOfRecentTradesToRetrieve=50`;
+export const recentTrades = (primaryCurrencyCode: string, secondaryCurrencyCode: string) =>
+  `${ignoreCORS}${indsAPI}Public/GetRecentTrades?primaryCurrencyCode=${primaryCurrencyCode}&secondaryCurrencyCode=${secondaryCurrencyCode}&numberOfRecentTradesToRetrieve=50`;

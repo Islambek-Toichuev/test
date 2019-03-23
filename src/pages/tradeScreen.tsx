@@ -38,9 +38,9 @@ export default class TradeScreen extends Component<Props, States> {
   }
 
   async componentWillMount() {
-    const { PrimaryCurrencyCode } = this.props.match.params;
+    const { PrimaryCurrencyCode, SecondaryCurrencyCode } = this.props.match.params;
     this.setState({
-      tradeDetails: await tradesService.getRecentTrades(PrimaryCurrencyCode)
+      tradeDetails: await tradesService.getRecentTrades(PrimaryCurrencyCode, SecondaryCurrencyCode)
     });
   }
 

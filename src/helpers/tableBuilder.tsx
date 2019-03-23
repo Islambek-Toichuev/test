@@ -22,7 +22,7 @@ interface User {
 export default class TableBuilder {
   constructor() {}
 
-  currencyTable = (currencies: any, recentTrades: any, currencyImages: any) => {
+  currencyTable = (currencies: any, recentTrades: any, currencyImages: any, selectedCurrency: string) => {
     return currencies.map((currency: string, index: number) => {
       let { Trades } = recentTrades[index];
       let firstTrade = Trades[0];
@@ -54,7 +54,7 @@ export default class TableBuilder {
         },
         {
           title: "Currency Pair",
-          value: currency + " / AUD"
+          value: currency + ` / ${selectedCurrency}`
         },
         {
           title: "Last Price",

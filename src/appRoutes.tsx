@@ -9,7 +9,7 @@ import Menu from "./components/menu";
 import { connect } from "react-redux";
 import { User } from "./interfaces/index";
 
-const FrontPage = React.lazy(() => import("./pages/frontPage"));
+const FrontPage = React.lazy(() => import("./pages/FrontPage/index"));
 const history = createHistory();
 
 interface Props {
@@ -32,7 +32,7 @@ class AppRoutes extends Component<Props> {
             <Switch>
               {session && (
                 <Route
-                  path="/currencies/:PrimaryCurrencyCode"
+                  path="/currencies/:PrimaryCurrencyCode/to/:SecondaryCurrencyCode"
                   component={TradeScreen}
                 />
               )}
