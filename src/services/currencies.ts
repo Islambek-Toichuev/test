@@ -4,9 +4,10 @@ import { currencyImages } from "./apis";
 
 const base = new BaseService();
 
-export class CurrencyService {
+export default class CurrencyService {
   constructor() {}
-  
+
   getCurrencyCodes = base.getJson(currencyCodes);
-  getCurrencyImage = (PrimaryCurrencyCode: string) => base.getRequest(currencyImages(PrimaryCurrencyCode));
+  getCurrencyImage = (PrimaryCurrencyCode: string) =>
+    base.getRequest(currencyImages(PrimaryCurrencyCode));
 }

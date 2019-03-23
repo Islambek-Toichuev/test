@@ -3,10 +3,9 @@ import { recentTrades } from "./apis";
 
 const base = new BaseService();
 
-export class TradesService {
-
+export default class TradesService {
   constructor() {}
-  
-  getRecentTrades = (PrimaryCurrencyCode: string) => base.getJson(recentTrades(PrimaryCurrencyCode));
 
+  getRecentTrades = (PrimaryCurrencyCode: string) =>
+    base.getJson(recentTrades(PrimaryCurrencyCode));
 }

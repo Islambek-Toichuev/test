@@ -1,0 +1,3 @@
+export const SET_SESSION = "SET_SESSION";
+export const GET_CURRENT_SESSION = "GET_CURRENT_SESSION";
+export const CLEAR_SESSION = "CLEAR_SESSION";

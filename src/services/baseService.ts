@@ -1,30 +1,28 @@
-
 export class BaseService {
-
-  constructor() { }
+  constructor() {}
 
   getJson = async (url: string) => {
     try {
       let response = await fetch(url, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       });
       return await response.json();
     } catch (err) {
-      console.error('err:', err)
+      console.error("err:", err);
     }
   };
 
   getRequest = async (url: string) => {
     try {
-      let response = await fetch(url, {method: "GET"});
+      let response = await fetch(url, { method: "GET" });
       let blob = await response.blob();
       let image = await URL.createObjectURL(blob);
       return image;
     } catch (err) {
-      console.error('err:', err)
+      console.error("err:", err);
     }
-  }
+  };
 }
