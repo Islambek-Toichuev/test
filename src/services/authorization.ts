@@ -15,7 +15,7 @@ export default class AuthorizationService {
   constructor() {}
 
   store = window.localStorage;
-  registeredUsers = JSON.parse(this.store.getItem("users") || "{}");
+  registeredUsers = JSON.parse(this.store.getItem("users") || "[]");
   noUsersInDB = this.registeredUsers.length === 0;
   findUserbyEmail = (user: User) => {
     return this.registeredUsers.find(
